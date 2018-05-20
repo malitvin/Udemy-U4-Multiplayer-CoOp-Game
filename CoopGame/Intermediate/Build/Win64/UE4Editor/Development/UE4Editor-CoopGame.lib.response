@@ -1,0 +1,16 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-CoopGame.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"C:\Program Files\Epic Games\UE_4.19\Engine\Intermediate\Build\Win64\UE4Editor\Development\Engine\SharedPCH.Engine.h.obj"
+"C:\GAME ENGINEERING\Udemy\Udemy-U4-Multiplayer-CoOp-Game\CoopGame\Intermediate\Build\Win64\UE4Editor\Development\CoopGame\CoopGame.cpp.obj"
+"C:\GAME ENGINEERING\Udemy\Udemy-U4-Multiplayer-CoOp-Game\CoopGame\Intermediate\Build\Win64\UE4Editor\Development\CoopGame\CoopGameGameModeBase.cpp.obj"
+"C:\GAME ENGINEERING\Udemy\Udemy-U4-Multiplayer-CoOp-Game\CoopGame\Intermediate\Build\Win64\UE4Editor\Development\CoopGame\CoopGame.init.gen.cpp.obj"
+"C:\GAME ENGINEERING\Udemy\Udemy-U4-Multiplayer-CoOp-Game\CoopGame\Intermediate\Build\Win64\UE4Editor\Development\CoopGame\CoopGameGameModeBase.gen.cpp.obj"
+"C:\Program Files\Epic Games\UE_4.19\Engine\Intermediate\Build\Win64\UE4Editor\Development\CoopGame\PCLaunch.rc.res"
+"C:\Program Files\Epic Games\UE_4.19\Engine\Intermediate\Build\Win64\UE4Editor\Development\ModuleVersionResource.rc.inl.res"
+/OUT:"C:\GAME ENGINEERING\Udemy\Udemy-U4-Multiplayer-CoOp-Game\CoopGame\Intermediate\Build\Win64\UE4Editor\Development\UE4Editor-CoopGame.lib"
