@@ -19,10 +19,13 @@ public:
 	// Sets default values for this actor's properties
 	ASWeapon();
 
-	UFUNCTION(BlueprintCallable,Category = "Weapon")
-	virtual void Fire();
+		virtual void StartFire();
+
+		virtual void StopFire();
 
 protected:
+
+	virtual void BeginPlay() override;
 
 	UPROPERTY(VisibleAnywhere,BlueprintReadOnly, Category="Components")
 	USkeletalMeshComponent* MeshComp;
@@ -62,5 +65,18 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
 	float BaseDamage;
+
+	virtual void Fire();
+
+	FTimerHandle TimeHandle_TimeBetweenShots;
+
+	float LastFireTime;
+
+	//RPM - bullets per minute fired by weapon
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+	float RateOfFire;
+
+	//Derived from rate of fire
+	float TimeBetweenShots;
 	
 };
