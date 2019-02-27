@@ -7,6 +7,8 @@
 #include "SCharacter.generated.h"
 
 class UCameraComponent;
+class UInputComponent;
+class ASWeapon;
 class USpringArmComponent;
 
 UCLASS()
@@ -50,6 +52,16 @@ protected:
 	void BeginZoom();
 
 	void EndZoom();
+
+	ASWeapon* CurrentWeapon;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Player")
+	TSubclassOf<ASWeapon> StarterWeaponClass;
+
+	UPROPERTY(VisibleDefaultsOnly, Category = "Player")
+		FName WeaponSocketName = "WeaponSocket";
+
+	void Fire();
 
 public:	
 	// Called every frame
