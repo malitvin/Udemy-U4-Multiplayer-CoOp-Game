@@ -28,6 +28,9 @@ ASWeapon::ASWeapon()
 
 	BaseDamage = 20.0f;
 	RateOfFire = 600;
+
+	//When we spawn on server it will spawn on client
+	SetReplicates(true);
 }
 
 void ASWeapon::BeginPlay()
