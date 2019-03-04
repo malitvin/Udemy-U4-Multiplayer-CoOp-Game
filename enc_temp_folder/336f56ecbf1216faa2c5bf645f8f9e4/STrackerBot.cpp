@@ -7,7 +7,6 @@
 #include "Runtime/NavigationSystem/Public/NavigationPath.h"
 #include "GameFramework/Character.h"
 #include "SHealthComponent.h"
-#include "DrawDebugHelpers.h"
 
 // Sets default values
 ASTrackerBot::ASTrackerBot()
@@ -91,8 +90,6 @@ void ASTrackerBot::SelfDestruct()
 
 	//Apply Damage
 	UGameplayStatics::ApplyRadialDamage(this, ExplosionDamage, GetActorLocation(), ExplosionRadius,nullptr, IgnoredActors,this,GetInstigatorController(),true);
-
-	DrawDebugSphere(GetWorld(), GetActorLocation(), ExplosionRadius, 12, FColor::Red, false, 2.0f, 0, 1.0f);
 
 	//Destroy
 	Destroy();
