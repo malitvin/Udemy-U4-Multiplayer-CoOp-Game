@@ -54,6 +54,12 @@ void ASWeapon::StopFire()
 
 void ASWeapon::Fire()
 {
+	//Client will call this
+	if (Role < ROLE_Authority)
+	{
+		ServerFire();
+	}
+
 	AActor* MyOwner = GetOwner();
 	if (MyOwner)
 	{
@@ -89,6 +95,7 @@ void ASWeapon::Fire()
 				ActualDamage *= 2.5f;
 			}
 
+			//ONLY APPLY DAMAGE ON SERVER
 			UGameplayStatics::ApplyPointDamage(HitActor, ActualDamage, ShotDirection, Hit, MyOwner->GetInstigatorController(), this, DamageType);
 
 
@@ -121,6 +128,17 @@ void ASWeapon::Fire()
 
 		LastFireTime = GetWorld()->TimeSeconds;
 	}
+}
+
+void ASWeapon::ServerFire_Implementation()
+{
+	Fire();
+}
+
+//validate code , no anti-cheat
+bool ASWeapon::ServerFire_Validate()
+{
+	return true;
 }
 
 void ASWeapon::PlayFireEffect(FVector TracerEndPoint)

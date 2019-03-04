@@ -68,6 +68,10 @@ protected:
 
 	virtual void Fire();
 
+	//To server, guaranteed to go to server
+	UFUNCTION(Server,Reliable,WithValidation)
+	void ServerFire();
+
 	FTimerHandle TimeHandle_TimeBetweenShots;
 
 	float LastFireTime;
