@@ -10,6 +10,19 @@ class USkeletalMeshComponent;
 class UDamageType;
 class UParticleSystem;
 
+//Contains info of a single hitscan weapon linetrace 
+USTRUCT()
+struct FHitScanTrace
+{
+	GENERATED_BODY()
+
+public:
+	UPROPERTY()
+		TEnumAsByte<EPhysicalSurface> SurfaceType;
+	UPROPERTY()
+	FVector_NetQuantize TraceTo;
+};
+
 UCLASS()
 class COOPGAME_API ASWeapon : public AActor
 {
@@ -32,6 +45,9 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
 	void PlayFireEffect(FVector TracerEndPoint);
+
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+		void PlayImpactEffects(EPhysicalSurface SurfaceType, FVector ImpactPoint);
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
 	bool debugRay;
@@ -82,5 +98,11 @@ protected:
 
 	//Derived from rate of fire
 	float TimeBetweenShots;
+
+	UPROPERTY(ReplicatedUsing=OnRep_HitScanTrace)
+	FHitScanTrace HitScanTrace;
+
+	UFUNCTION()
+	void OnRep_HitScanTrace();
 	
 };
