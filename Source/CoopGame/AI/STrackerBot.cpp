@@ -50,6 +50,9 @@ void ASTrackerBot::BeginPlay()
 	if (Role == ROLE_Authority)
 	{
 		NextPathPoint = GetNextPathPoint();
+
+		FTimerHandle TimerHandle_NearbyBots;
+		GetWorldTimerManager().SetTimer(TimerHandle_NearbyBots, this, &ASTrackerBot::OnCheckNearbyBots, 1.0f, true, 0.0f);
 	}
 }
 
@@ -107,8 +110,10 @@ void ASTrackerBot::SelfDestruct()
 		TArray<AActor*> IgnoredActors;
 		IgnoredActors.Add(this);
 
+		float ActualDamage = ExplosionDamage + (ExplosionDamage * PowerLevel);
+
 		//Apply Damage
-		UGameplayStatics::ApplyRadialDamage(this, ExplosionDamage, GetActorLocation(), ExplosionRadius, nullptr, IgnoredActors, this, GetInstigatorController(), true);
+		UGameplayStatics::ApplyRadialDamage(this, ActualDamage, GetActorLocation(), ExplosionRadius, nullptr, IgnoredActors, this, GetInstigatorController(), true);
 
 		DrawDebugSphere(GetWorld(), GetActorLocation(), ExplosionRadius, 12, FColor::Red, false, 2.0f, 0, 1.0f);
 
@@ -147,6 +152,50 @@ void ASTrackerBot::Tick(float DeltaTime)
 		}
 	}
 
+}
+
+void ASTrackerBot::OnCheckNearbyBots()
+{
+	const float Radius = 600;
+
+	FCollisionShape CollShape;
+	CollShape.SetSphere(Radius);
+
+	FCollisionObjectQueryParams QueryParams;
+	QueryParams.AddObjectTypesToQuery(ECC_PhysicsBody);
+	QueryParams.AddObjectTypesToQuery(ECC_Pawn);
+
+	TArray<FOverlapResult> Overlaps;
+	GetWorld()->OverlapMultiByObjectType(Overlaps, GetActorLocation(), FQuat::Identity, QueryParams, CollShape);
+
+	DrawDebugSphere(GetWorld(), GetActorLocation(), Radius, 12, FColor::Cyan, 1.0f);
+
+	//check overlapping bots
+	int32 NumberOfBots = 0;
+	for (FOverlapResult Result : Overlaps)
+	{
+		ASTrackerBot* Bot = Cast<ASTrackerBot>(Result.GetActor());
+
+		if (Bot && Bot != this)
+		{
+			NumberOfBots++;
+		}
+	}
+
+	const int32 MaxPowerLevel = 4;
+
+	PowerLevel = FMath::Clamp(NumberOfBots, 0, MaxPowerLevel);
+
+	if (MatInst == nullptr)
+	{
+		MatInst = MeshComp->CreateAndSetMaterialInstanceDynamicFromMaterial(0, MeshComp->GetMaterial(0));
+	}
+	if (MatInst)
+	{
+		float Alpha = PowerLevel / (float)MaxPowerLevel;
+
+		MatInst->SetScalarParameterValue("PowerLevelAlpha", Alpha);
+	}
 }
 
 void ASTrackerBot::NotifyActorBeginOverlap(AActor* OtherActor)

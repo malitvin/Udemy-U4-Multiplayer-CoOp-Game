@@ -69,7 +69,6 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "TrackerBot")
 	float ExplosionDamage;
 
-	UPROPERTY(EditDefaultsOnly, Category = "TrackerBot")
 	float SelfDamageInterval;
 
 	FTimerHandle TimerHandle_SelfDamage;
@@ -82,6 +81,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "TrackerBot")
 	USoundCue* ExplodeSound;
 
+	int32 PowerLevel;
+
 public:	
 
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
@@ -89,4 +90,5 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	void OnCheckNearbyBots();
 };
