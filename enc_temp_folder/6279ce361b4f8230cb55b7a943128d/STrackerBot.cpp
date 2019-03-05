@@ -50,10 +50,10 @@ void ASTrackerBot::BeginPlay()
 	if (Role == ROLE_Authority)
 	{
 		NextPathPoint = GetNextPathPoint();
-	}
 
-	FTimerHandle TimerHandle_NearbyBots;
-	GetWorldTimerManager().SetTimer(TimerHandle_NearbyBots, this, &ASTrackerBot::OnCheckNearbyBots, 1.0f, true, 0.0f);
+		FTimerHandle TimerHandle_NearbyBots;
+		GetWorldTimerManager().SetTimer(TimerHandle_NearbyBots, this, &ASTrackerBot::OnCheckNearbyBots, 1.0f, true, 0.0f);
+	}
 }
 
 void ASTrackerBot::HandleDamage(USHealthComponent * OwningHealthComp, float Health, float HealthDelta, const UDamageType * DamageType, AController * InstigatedBy, AActor * DamageCauser)
@@ -100,7 +100,7 @@ FVector ASTrackerBot::GetNextPathPoint()
 		}
 	}
 
-	ACharacter* PlayerPawn = Cast<ASCharacter>(closestActor);\
+	ACharacter* PlayerPawn = Cast<ASCharacter>(closestActor);
 	UNavigationPath* Path = UNavigationSystemV1::FindPathToActorSynchronously(this, GetActorLocation(), PlayerPawn);
 
 	//make sure we have more than one entry (first is actor location)
