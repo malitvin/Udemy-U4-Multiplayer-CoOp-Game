@@ -8,6 +8,7 @@
 
 class UDecalComponent;
 class USphereComponent;
+class ASPowerupActor;
 
 UCLASS()
 class COOPGAME_API ASPickupActor : public AActor
@@ -27,6 +28,19 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UDecalComponent* DecalComp;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Pickup Actor")
+	TSubclassOf<ASPowerupActor> PowerUpClass;
+
+	ASPowerupActor* PowerUpInstance;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Pickup Actor")
+	float CooldownDuration;
+
+	FTimerHandle TimerHandle_RespawnTimer;
+
+	UFUNCTION()
+	void Respawn();
 
 public:	
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
